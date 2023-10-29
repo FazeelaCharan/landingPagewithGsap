@@ -1,0 +1,143 @@
+const scroll = new LocomotiveScroll({
+    el: document.querySelector('#main'),
+    smooth: true
+});
+
+function circleMouseFollower(){
+    window.addEventListener("mousemove", function(dets){
+        document.querySelector("#minicircle").style.transform =`translate(${dets.clientX}px,${dets.clientY}px)`
+    })
+}
+circleMouseFollower();
+gsap.from("#nav a,#nav h5",{
+    y:10,
+    duration:1.5,
+    delay:.3,
+    opacity:0,
+    ease:Expo.easeInOut,
+
+})
+gsap.to(".boundingelem",{
+    y:0,
+    duration:2,
+    delay:1,
+    stagger:.2,
+     ease:Expo.easeInOut,
+
+})
+gsap.from("#lastbottomheadings",{
+    y:100,
+    duration:1.5,
+    delay:2,
+    opacity:0,
+    ease:Expo.easeInOut,
+
+})
+document.querySelectorAll(".elem")
+.forEach(function(elem){
+    
+    elem.addEventListener("mouseleave", function (dets) {
+        gsap.to(elem.querySelector("img"), {
+          opacity: 0,
+          ease: Power3,
+          duration: 0.5,
+        });
+      });
+   
+    elem.addEventListener("mousemove", function(dets){
+        var diff=(dets.clientY- elem.getBoundingClientRect().top);
+gsap.to(elem.querySelector("img"),{
+    opacity:1,
+    ease:Power1,
+    top:diff,
+    left:dets.clientX
+});
+    });
+})
+
+  
+
+
+
+
+
+
+/*gsap.registerPlugin(ScrollTrigger);
+
+// Using Locomotive Scroll from Locomotive https://github.com/locomotivemtl/locomotive-scroll
+
+const locoScroll = new LocomotiveScroll({
+  el: document.querySelector(".smooth-scroll"),
+  smooth: true
+});
+// each time Locomotive Scroll updates, tell ScrollTrigger to update too (sync positioning)
+locoScroll.on("scroll", ScrollTrigger.update);
+
+// tell ScrollTrigger to use these proxy methods for the ".smooth-scroll" element since Locomotive Scroll is hijacking things
+ScrollTrigger.scrollerProxy(".smooth-scroll", {
+  scrollTop(value) {
+    return arguments.length ? locoScroll.scrollTo(value, 0, 0) : locoScroll.scroll.instance.scroll.y;
+  }, // we don't have to define a scrollLeft because we're only scrolling vertically.
+  getBoundingClientRect() {
+    return {top: 0, left: 0, width: window.innerWidth, height: window.innerHeight};
+  },
+  // LocomotiveScroll handles things completely differently on mobile devices - it doesn't even transform the container at all! So to get the correct behavior and avoid jitters, we should pin things with position: fixed on mobile. We sense it by checking to see if there's a transform applied to the container (the LocomotiveScroll-controlled element).
+  pinType: document.querySelector(".smooth-scroll").style.transform ? "transform" : "fixed"
+});
+
+
+// --- RED PANEL ---
+gsap.from(".line-1", {
+  scrollTrigger: {
+    trigger: ".line-1",
+    scroller: ".smooth-scroll",
+    scrub: true,
+    start: "top bottom",
+    end: "top top",
+    onUpdate: self => console.log(self.direction)
+  },
+  scaleX: 0,
+  transformOrigin: "left center", 
+  ease: "none"
+});
+
+
+// --- ORANGE PANEL ---
+gsap.from(".line-2", {
+  scrollTrigger: {
+    trigger: ".orange",
+    scroller: ".smooth-scroll",
+    scrub: true,
+    pin: true,
+    start: "top top",
+    end: "+=100%"
+  },
+  scaleX: 0, 
+  transformOrigin: "left center", 
+  ease: "none"
+});
+
+
+// --- PURPLE/GREEN PANEL ---
+var tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: ".purple",
+      scroller: ".smooth-scroll",
+      scrub: true,
+      pin: true,
+      start: "top top",
+      end: "+=100%"
+    }
+  });
+
+tl.from(".purple p", {scale: 0.3, rotation:45, autoAlpha: 0, ease: "power2"})
+  .from(".line-3", {scaleX: 0, transformOrigin: "left center", ease: "none"}, 0)
+  .to(".purple", {backgroundColor: "#28a92b"}, 0);
+
+
+
+// each time the window updates, we should refresh ScrollTrigger and then update LocomotiveScroll. 
+ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
+
+// after everything is set up, refresh() ScrollTrigger and update LocomotiveScroll because padding may have been added for pinning, etc.
+ScrollTrigger.refresh();*/
